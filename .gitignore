@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+build/
+dist/
+
+# Local user data & card images
+data.json
+images/

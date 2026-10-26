@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Scan Barcode{% endblock %}
+{% block theme_name %}default{% endblock %}
+
+{% block content %}
+<div class="scanner-page">
+    <div class="m3-hero">
+        <h1 class="m3-display-large">Card Barcode Scanner</h1>
+        <p class="m3-body-large">Scan your physical Animal Kaiser card barcodes and transmit them directly to Play! emulator via HTTP I/O.</p>
+    </div>
+
+    <div class="scanner-layout">
+        <!-- Camera Scanner Card -->
+        <div class="m3-card m3-card-elevated">
+            <div class="m3-card-header">
+                <div class="m3-card-title-group">
+                    <span class="card-icon noto-emoji">📷</span>
+                    <div>
+                        <h2>Real-time Camera Scanner</h2>
+                        <p class="m3-card-subtitle">Detect barcodes directly from webcam or mobile device</p>
+                    </div>
+                </div>
+                <div class="m3-btn-group">
+                    <button type="button" id="btnStopCamera" class="m3-btn m3-btn-outlined" style="display:none;">
+                        <span class="noto-emoji">⏹️</span> Close Camera
+                    </button>
+                </div>
+            </div>
+
+            <div class="camera-stage" id="cameraViewport">
+                <video id="cameraVideo" playsinline autoplay muted></video>
+                <div class="scan-frame" id="scanOverlay">
+                    <div class="scan-laser-line"></div>
+                    <div class="corner c-tl"></div>
+                    <div class="corner c-tr"></div>
+                    <div class="corner c-bl"></div>
+                    <div class="corner c-br"></div>
+                </div>
+                <div class="camera-idle-view" id="cameraPlaceholder">
+                    <span class="idle-icon noto-emoji">🎥</span>
+                    <h3>Camera Inactive</h3>
+                    <p>Click <strong>"Open Camera"</strong> to scan physical card barcodes automatically with your optical sensor.</p>
+                    <button type="button" id="btnStartCamera" class="m3-btn m3-btn-primary m3-btn-open-camera">
+                        <span class="noto-emoji">📸</span> Open Camera
+                    </button>
+                </div>
+            </div>
+
+            <!-- Drag & Drop / File Upload -->
+            <div class="m3-dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+                <input type="file" id="fileInput" accept="image/*" style="display:none;">
+                <div class="dropzone-content">
+                    <span class="drop-icon noto-emoji">🖼️</span>
+                    <p><strong>Select or Drag Card Image</strong> here</p>
+                    <small>Supports JPEG, PNG, and WEBP formats</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manual Input & Connection Info Card -->
+        <div class="m3-card m3-card-elevated">
+            <div class="m3-card-header">
+                <div class="m3-card-title-group">
+                    <span class="card-icon noto-emoji">⌨️</span>
+                    <div>
+                        <h2>Send Barcode Manually</h2>
+                        <p class="m3-card-subtitle">Enter barcode string accurately</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="manualBarcodeForm" class="m3-form">
+                <div class="m3-field">
+                    <label for="barcodeInput">Card Barcode String</label>
+                    <div class="m3-input-action-row">
+                        <input type="text" id="barcodeInput" name="barcode" class="m3-input font-mono" placeholder="e.g. bn2tgYOh" required autocomplete="off">
+                        <button type="submit" class="m3-btn m3-btn-filled" id="btnSendManual">
+                            <span class="noto-emoji">⚡</span> Send
+                        </button>
+                    </div>
+                    <span class="m3-helper-text">Barcode will be dispatched to <code>http://&lt;IP&gt;:9876/sys147/barcode</code></span>
+                </div>
+            </form>
+
+            <div class="m3-divider"></div>
+
+            <div class="m3-info-panel">
+                <div class="panel-header">
+                    <span class="noto-emoji">📱</span>
+                    <h3>Mobile WiFi Scanner Access</h3>
+                </div>
+                <p>Open in Chrome or Safari on your mobile device connected to the same WiFi network:</p>
+                <div class="m3-ip-badge-container">
+                    <span class="label">URL Address:</span>
+                    <code class="m3-ip-badge">http://{{ ip_add }}:5000</code>
+                </div>
+                <small class="m3-helper-text">Your smartphone camera can scan cards directly and transmit them to the PC emulator.</small>
+            </div>
+
+            <div class="m3-divider"></div>
+
+            <div class="m3-info-panel">
+                <div class="panel-header">
+                    <span class="noto-emoji">🎮</span>
+                    <h3>Play! Emulator Setup Guide (Namco System 147)</h3>
+                </div>
+                <ol class="m3-step-list">
+                    <li>Launch <strong>Play!</strong> emulator and run <strong>Animal Kaiser</strong>.</li>
+                    <li>Ensure the <strong>I/O HTTP Server</strong> feature in the emulator is enabled (Default Port: <code>9876</code>).</li>
+                    <li>Status indicator in the top right will turn green (<strong>Play! Active</strong>).</li>
+                    <li>When the game prompts to scan, click <strong>"Use Card"</strong> or scan physical barcode.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

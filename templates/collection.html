@@ -1,0 +1,402 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if filter_type == 'All' %}All Cards{% else %}{{ filter_type }} Cards{% endif %}
+{% endblock %}
+
+{% block theme_name %}{{ filter_type|lower }}{% endblock %}
+
+{% block content %}
+<div class="collection-page type-{{ filter_type|lower }}">
+    <div class="m3-page-header">
+        <div class="header-titles">
+            <div class="m3-category-chip {{ filter_type|lower }}">
+                {% if filter_type == 'Animal' %}
+                    <span class="noto-emoji">🦁</span> ANIMAL CARDS
+                {% elif filter_type == 'Strong' %}
+                    <span class="noto-emoji">⚡</span> STRONG CARDS
+                {% elif filter_type == 'Miracle' %}
+                    <span class="noto-emoji">🌟</span> MIRACLE CARDS
+                {% else %}
+                    <span class="noto-emoji">🎴</span> ALL CARDS
+                {% endif %}
+            </div>
+            <h1 class="m3-display-medium">
+                {% if filter_type == 'All' %}
+                    Kaiser <strong>Deck</strong>
+                {% else %}
+                    <strong>{{ filter_type }}</strong> Cards
+                {% endif %}
+            </h1>
+            <p class="m3-body-large">
+                {% if filter_type == 'All' %}
+                    Complete Animal Kaiser card catalogue with instant barcode trigger into Play! emulator.
+                {% else %}
+                    Catalogue of Animal Kaiser {{ filter_type }} cards with instant barcode trigger into Play! emulator.
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="header-action-group">
+            <button class="m3-btn m3-btn-filled" onclick="openAddModal()">
+                <span class="noto-emoji">➕</span> Add Card
+            </button>
+        </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="m3-toolbar m3-card">
+        <div class="m3-segmented-tabs">
+            <a href="{{ url_for('cards', type='All', query=query) }}" class="m3-tab-item tab-all {% if filter_type == 'All' %}active{% endif %}">
+                <span class="noto-emoji">🎴</span> All Cards
+            </a>
+            <a href="{{ url_for('cards', type='Animal', query=query) }}" class="m3-tab-item tab-animal {% if filter_type == 'Animal' %}active{% endif %}">
+                <span class="noto-emoji">🦁</span> Animal
+            </a>
+            <a href="{{ url_for('cards', type='Strong', query=query) }}" class="m3-tab-item tab-strong {% if filter_type == 'Strong' %}active{% endif %}">
+                <span class="noto-emoji">⚡</span> Strong
+            </a>
+            <a href="{{ url_for('cards', type='Miracle', query=query) }}" class="m3-tab-item tab-miracle {% if filter_type == 'Miracle' %}active{% endif %}">
+                <span class="noto-emoji">🌟</span> Miracle
+            </a>
+        </div>
+
+        <form action="{{ url_for('cards') }}" method="GET" class="m3-search-bar">
+            <input type="hidden" name="type" value="{{ filter_type }}">
+            <div class="m3-search-box">
+                <span class="search-icon noto-emoji">🔍</span>
+                <input type="text" name="query" value="{{ query }}" placeholder="Search card name..." autocomplete="off">
+                {% if query %}
+                    <a href="{{ url_for('cards', type=filter_type) }}" class="search-clear-btn" title="Clear filter">✕</a>
+                {% endif %}
+            </div>
+            <button type="submit" class="m3-btn m3-btn-outlined">Search</button>
+        </form>
+    </div>
+
+    <!-- Cards Grid (12 Cards Max per Page) -->
+    {% if collection and collection|length > 0 %}
+        <div class="m3-card-grid">
+            {% for card in collection %}
+            <div class="tcg-card type-{{ card.type|lower }}" id="card-{{ card.id }}">
+                <div class="tcg-card-bezel">
+                    <!-- Vertical Card Media Box -->
+                    <div class="tcg-card-frame">
+                        {% if card.gambar %}
+                            <img src="{{ url_for('images', filename=card.gambar) }}" alt="{{ card.nama }}" class="tcg-card-img" loading="lazy">
+                        {% else %}
+                            <div class="tcg-placeholder-img">
+                                <span class="noto-emoji">🎴</span>
+                                <small>No Image Uploaded</small>
+                            </div>
+                        {% endif %}
+
+                        <!-- Rarity Chip -->
+                        {% set r_cls = card.rarity|lower|replace(' ', '-') %}
+                        <span class="m3-rarity-chip rarity-{{ r_cls }} type-{{ card.type|lower }}">{{ card.rarity }}</span>
+                        
+                        <!-- Card Type Mini Badge -->
+                        <span class="tcg-type-indicator {{ card.type|lower }}">
+                            {% if card.type == 'Animal' %}🦁{% elif card.type == 'Strong' %}⚡{% else %}🌟{% endif %}
+                        </span>
+                    </div>
+
+                    <!-- Card Body & Details -->
+                    <div class="tcg-card-content">
+                        <h3 class="tcg-card-name" title="{{ card.nama }}">{{ card.nama }}</h3>
+                        
+                        <!-- Real Visual Barcode with Text Below -->
+                        <div class="tcg-barcode-strip">
+                            <div class="barcode-visual-wrapper">
+                                <svg class="barcode-svg" data-barcode="{{ card.barcode }}"></svg>
+                            </div>
+                            <div class="barcode-text-row">
+                                <code class="barcode-code-text font-mono">{{ card.barcode }}</code>
+                            </div>
+                        </div>
+
+                        <div class="tcg-actions">
+                            <button type="button" class="m3-btn m3-btn-filled m3-btn-block btn-trigger-card" data-barcode="{{ card.barcode }}" data-card-name="{{ card.nama }}" onclick="sendCardBarcode(this)">
+                                <span class="noto-emoji">⚡</span> Use Card
+                            </button>
+                            <div class="tcg-sub-actions">
+                                <button type="button" class="m3-btn m3-btn-tonal m3-btn-sm" onclick="openEditModal({{ card.id }})" title="Edit card">
+                                    <span class="noto-emoji">✏️</span> Edit
+                                </button>
+                                <button type="button" class="m3-btn m3-btn-danger m3-btn-sm btn-delete-card" data-card-id="{{ card.id }}" data-card-name="{{ card.nama }}" onclick="confirmDeleteCard(this)" title="Delete card">
+                                    <span class="noto-emoji">🗑️</span> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if total_pages > 1 %}
+        <div class="m3-pagination">
+            {% if current_page > 1 %}
+                <a href="{{ url_for('cards', type=filter_type, page=current_page - 1, query=query) }}" class="m3-page-btn prev">« Previous</a>
+            {% endif %}
+
+            <div class="m3-page-numbers">
+                {% for p in range(1, total_pages + 1) %}
+                    <a href="{{ url_for('cards', type=filter_type, page=p, query=query) }}" class="m3-page-btn {% if p == current_page %}active{% endif %}">{{ p }}</a>
+                {% endfor %}
+            </div>
+
+            {% if current_page < total_pages %}
+                <a href="{{ url_for('cards', type=filter_type, page=current_page + 1, query=query) }}" class="m3-page-btn next">Next »</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    {% else %}
+        <div class="m3-empty-state m3-card">
+            <span class="empty-icon noto-emoji">📭</span>
+            <h2>No Cards Found</h2>
+            <p>{% if query %}No results matching "<strong>{{ query }}</strong>"{% else %}Your {{ filter_type }} card deck is currently empty.{% endif %}</p>
+            <button class="m3-btn m3-btn-filled" onclick="openAddModal()">
+                <span class="noto-emoji">➕</span> Add Card Now
+            </button>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Modal Add Card -->
+<div id="addModal" class="m3-modal-backdrop">
+    <div class="m3-dialog">
+        <div class="m3-dialog-header">
+            <h2>Add New Card</h2>
+            <button class="m3-btn-icon" onclick="closeAddModal()">✕</button>
+        </div>
+        <form action="{{ url_for('tambah') }}" method="POST" enctype="multipart/form-data" class="m3-form">
+            <div class="m3-field">
+                <label>Card Type *</label>
+                {% set initial_add_type = filter_type if filter_type in ['Animal', 'Strong', 'Miracle'] else 'Animal' %}
+                <div class="m3-chip-select-dropdown" id="addTypeDropdown">
+                    <input type="hidden" id="addType" name="type" value="{{ initial_add_type }}">
+                    <button type="button" class="m3-chip-dropdown-trigger chip-{{ initial_add_type|lower }}" id="addTypeTrigger" onclick="toggleChipDropdown('add')" aria-expanded="false">
+                        <span class="chip-trigger-content">
+                            <span class="chip-icon noto-emoji">{% if initial_add_type == 'Animal' %}🦁{% elif initial_add_type == 'Strong' %}⚡{% else %}🌟{% endif %}</span>
+                            <span class="chip-text">{{ initial_add_type }}</span>
+                        </span>
+                        <span class="chip-dropdown-arrow">▼</span>
+                    </button>
+                    <div class="m3-chip-dropdown-menu" id="addTypeMenu">
+                        <button type="button" class="m3-chip-dropdown-item chip-animal {% if initial_add_type == 'Animal' %}selected{% endif %}" onclick="selectCardType('add', 'Animal')">
+                            <span class="noto-emoji">🦁</span>
+                            <span class="item-name">Animal</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item chip-strong {% if initial_add_type == 'Strong' %}selected{% endif %}" onclick="selectCardType('add', 'Strong')">
+                            <span class="noto-emoji">⚡</span>
+                            <span class="item-name">Strong</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item chip-miracle {% if initial_add_type == 'Miracle' %}selected{% endif %}" onclick="selectCardType('add', 'Miracle')">
+                            <span class="noto-emoji">🌟</span>
+                            <span class="item-name">Miracle</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m3-field">
+                <label for="addNama">Card Name *</label>
+                <input type="text" id="addNama" name="nama" class="m3-input" placeholder="e.g. Master Leo, Kaiser Fighters, Saturn Saw..." required>
+            </div>
+
+            <div class="m3-field">
+                <label>Card Rarity *</label>
+                <div class="m3-chip-select-dropdown" id="addRarityDropdown">
+                    <input type="hidden" id="addRarity" name="rarity" value="Normal">
+                    <button type="button" class="m3-chip-dropdown-trigger rarity-normal type-animal" id="addRarityTrigger" onclick="toggleChipDropdown('add', 'Rarity')" aria-expanded="false">
+                        <span class="chip-trigger-content">
+                            <span class="chip-icon noto-emoji">⚪</span>
+                            <span class="chip-text">Normal</span>
+                        </span>
+                        <span class="chip-dropdown-arrow">▼</span>
+                    </button>
+                    <div class="m3-chip-dropdown-menu" id="addRarityMenu">
+                        <button type="button" class="m3-chip-dropdown-item rarity-normal type-animal selected" onclick="selectCardRarity('add', 'Normal')">
+                            <span class="noto-emoji">⚪</span>
+                            <span class="item-name">Normal</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item rarity-bronze-rare" onclick="selectCardRarity('add', 'Bronze Rare')">
+                            <span class="noto-emoji">🥉</span>
+                            <span class="item-name">Bronze Rare</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item rarity-silver-rare" onclick="selectCardRarity('add', 'Silver Rare')">
+                            <span class="noto-emoji">🥈</span>
+                            <span class="item-name">Silver Rare</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item rarity-gold-rare" onclick="selectCardRarity('add', 'Gold Rare')">
+                            <span class="noto-emoji">🥇</span>
+                            <span class="item-name">Gold Rare</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        {% if initial_add_type == 'Animal' %}
+                        <button type="button" class="m3-chip-dropdown-item rarity-ultra-rare" onclick="selectCardRarity('add', 'Ultra Rare')">
+                            <span class="noto-emoji">🌌</span>
+                            <span class="item-name">Ultra Rare</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item rarity-kaiser-rare" onclick="selectCardRarity('add', 'Kaiser Rare')">
+                            <span class="noto-emoji">👑</span>
+                            <span class="item-name">Kaiser Rare</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="m3-field">
+                <label for="addBarcode">Barcode Code *</label>
+                <div class="m3-input-action-row">
+                    <input type="text" id="addBarcode" name="barcode" class="m3-input font-mono" placeholder="e.g. bn2tgYOh" required>
+                    <button type="button" class="m3-btn m3-btn-tonal btn-scan-img" onclick="document.getElementById('addBarcodeScanFile').click()" title="Scan barcode from image file">
+                        <span class="noto-emoji">📷</span> Scan Image
+                    </button>
+                    <input type="file" id="addBarcodeScanFile" accept="image/*" style="display:none;" onchange="scanBarcodeForInput(this, 'addBarcode')">
+                </div>
+                <span class="m3-helper-text">Enter code manually or click <strong>Scan Image</strong> to auto-detect barcode from photo.</span>
+            </div>
+
+            <div class="m3-field">
+                <label for="addGambar">Vertical Card Photo (Optional)</label>
+                <input type="file" id="addGambar" name="gambar" class="m3-file-input" accept="image/*" onchange="handleCardImageSelection(this, 'addBarcode')">
+            </div>
+
+            <div class="m3-dialog-actions">
+                <button type="button" class="m3-btn m3-btn-outlined" onclick="closeAddModal()">Cancel</button>
+                <button type="submit" class="m3-btn m3-btn-filled">Save Card</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Edit Card -->
+<div id="editModal" class="m3-modal-backdrop">
+    <div class="m3-dialog">
+        <div class="m3-dialog-header">
+            <h2>Edit Card</h2>
+            <button class="m3-btn-icon" onclick="closeEditModal()">✕</button>
+        </div>
+        <form action="{{ url_for('edit') }}" method="POST" enctype="multipart/form-data" class="m3-form">
+            <input type="hidden" id="editId" name="id">
+
+            <div class="m3-field">
+                <label>Card Type *</label>
+                <div class="m3-chip-select-dropdown" id="editTypeDropdown">
+                    <input type="hidden" id="editType" name="type" value="Animal">
+                    <button type="button" class="m3-chip-dropdown-trigger chip-animal" id="editTypeTrigger" onclick="toggleChipDropdown('edit')" aria-expanded="false">
+                        <span class="chip-trigger-content">
+                            <span class="chip-icon noto-emoji">🦁</span>
+                            <span class="chip-text">Animal</span>
+                        </span>
+                        <span class="chip-dropdown-arrow">▼</span>
+                    </button>
+                    <div class="m3-chip-dropdown-menu" id="editTypeMenu">
+                        <button type="button" class="m3-chip-dropdown-item chip-animal selected" onclick="selectCardType('edit', 'Animal')">
+                            <span class="noto-emoji">🦁</span>
+                            <span class="item-name">Animal</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item chip-strong" onclick="selectCardType('edit', 'Strong')">
+                            <span class="noto-emoji">⚡</span>
+                            <span class="item-name">Strong</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item chip-miracle" onclick="selectCardType('edit', 'Miracle')">
+                            <span class="noto-emoji">🌟</span>
+                            <span class="item-name">Miracle</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m3-field">
+                <label for="editNama">Card Name *</label>
+                <input type="text" id="editNama" name="nama" class="m3-input" required>
+            </div>
+
+            <div class="m3-field">
+                <label>Card Rarity *</label>
+                <div class="m3-chip-select-dropdown" id="editRarityDropdown">
+                    <input type="hidden" id="editRarity" name="rarity" value="Normal">
+                    <button type="button" class="m3-chip-dropdown-trigger rarity-normal type-animal" id="editRarityTrigger" onclick="toggleChipDropdown('edit', 'Rarity')" aria-expanded="false">
+                        <span class="chip-trigger-content">
+                            <span class="chip-icon noto-emoji">⚪</span>
+                            <span class="chip-text">Normal</span>
+                        </span>
+                        <span class="chip-dropdown-arrow">▼</span>
+                    </button>
+                    <div class="m3-chip-dropdown-menu" id="editRarityMenu">
+                        <button type="button" class="m3-chip-dropdown-item rarity-normal type-animal selected" onclick="selectCardRarity('edit', 'Normal')">
+                            <span class="noto-emoji">⚪</span>
+                            <span class="item-name">Normal</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item rarity-bronze-rare" onclick="selectCardRarity('edit', 'Bronze Rare')">
+                            <span class="noto-emoji">🥉</span>
+                            <span class="item-name">Bronze Rare</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item rarity-silver-rare" onclick="selectCardRarity('edit', 'Silver Rare')">
+                            <span class="noto-emoji">🥈</span>
+                            <span class="item-name">Silver Rare</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item rarity-gold-rare" onclick="selectCardRarity('edit', 'Gold Rare')">
+                            <span class="noto-emoji">🥇</span>
+                            <span class="item-name">Gold Rare</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item rarity-ultra-rare" onclick="selectCardRarity('edit', 'Ultra Rare')">
+                            <span class="noto-emoji">🌌</span>
+                            <span class="item-name">Ultra Rare</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                        <button type="button" class="m3-chip-dropdown-item rarity-kaiser-rare" onclick="selectCardRarity('edit', 'Kaiser Rare')">
+                            <span class="noto-emoji">👑</span>
+                            <span class="item-name">Kaiser Rare</span>
+                            <span class="item-badge">✓</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m3-field">
+                <label for="editBarcode">Barcode Code *</label>
+                <div class="m3-input-action-row">
+                    <input type="text" id="editBarcode" name="barcode" class="m3-input font-mono" required>
+                    <button type="button" class="m3-btn m3-btn-tonal btn-scan-img" onclick="document.getElementById('editBarcodeScanFile').click()" title="Scan barcode from image file">
+                        <span class="noto-emoji">📷</span> Scan Image
+                    </button>
+                    <input type="file" id="editBarcodeScanFile" accept="image/*" style="display:none;" onchange="scanBarcodeForInput(this, 'editBarcode')">
+                </div>
+                <span class="m3-helper-text">Enter code manually or click <strong>Scan Image</strong> to auto-detect barcode from photo.</span>
+            </div>
+
+            <div class="m3-field">
+                <label for="editGambar">Change Card Photo (Leave empty to keep current)</label>
+                <input type="file" id="editGambar" name="gambar" class="m3-file-input" accept="image/*" onchange="handleCardImageSelection(this, 'editBarcode')">
+            </div>
+
+            <div class="m3-dialog-actions">
+                <button type="button" class="m3-btn m3-btn-outlined" onclick="closeEditModal()">Cancel</button>
+                <button type="submit" class="m3-btn m3-btn-filled">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

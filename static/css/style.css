@@ -1,0 +1,1782 @@
+/* ==========================================================================
+   KAISER DECK - MATERIAL 3 DARK THEME (ANIMAL KAISER EDITION)
+   Fonts: Public Sans, Noto Color Emoji, JetBrains Mono
+   Author: maulana-kurniawan
+   ========================================================================== */
+
+:root {
+    /* Base Font Stacks */
+    --font-sans: 'Public Sans', 'Noto Color Emoji', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Material 3 Dark Palette Tokens */
+    --md-sys-color-background: #0f121a;
+    --md-sys-color-surface: #141824;
+    --md-sys-color-surface-dim: #10131d;
+    --md-sys-color-surface-bright: #272d3f;
+    --md-sys-color-surface-container-lowest: #0b0d14;
+    --md-sys-color-surface-container-low: #171c2b;
+    --md-sys-color-surface-container: #1b2133;
+    --md-sys-color-surface-container-high: #22293d;
+    --md-sys-color-surface-container-highest: #2a334b;
+    
+    --md-sys-color-on-background: #e2e8f0;
+    --md-sys-color-on-surface: #f1f5f9;
+    --md-sys-color-on-surface-variant: #94a3b8;
+    --md-sys-color-outline: rgba(148, 163, 184, 0.16);
+    --md-sys-color-outline-variant: rgba(255, 255, 255, 0.08);
+
+    /* Default Brand Accent */
+    --theme-accent: #38bdf8;
+    --theme-accent-container: rgba(56, 189, 248, 0.16);
+    --theme-on-accent: #02131e;
+    --theme-glow: rgba(56, 189, 248, 0.35);
+
+    /* Animal Kaiser Iconic Color Tokens */
+    /* All Cards: App Signature Blue Accent */
+    --ak-all-gradient: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+    --ak-all-glow: rgba(56, 189, 248, 0.45);
+    /* Animal: Fiery Kaiser Red */
+    --ak-animal-red: #e61919;
+    --ak-animal-red-light: #ff3b3b;
+    --ak-animal-gradient: linear-gradient(135deg, #e61919 0%, #b91c1c 50%, #7f1d1d 100%);
+    --ak-animal-glow: rgba(230, 25, 25, 0.45);
+
+    /* Strong: Electric Lightning Green */
+    --ak-strong-green: #00cc44;
+    --ak-strong-green-light: #22c55e;
+    --ak-strong-gradient: linear-gradient(135deg, #00cc44 0%, #059669 50%, #064e3b 100%);
+    --ak-strong-glow: rgba(0, 204, 68, 0.45);
+
+    /* Miracle: Cosmic Nebula Blue */
+    --ak-miracle-blue: #0088ff;
+    --ak-miracle-blue-light: #38bdf8;
+    --ak-miracle-gradient: linear-gradient(135deg, #0088ff 0%, #2563eb 50%, #1e3a8a 100%);
+    --ak-miracle-glow: rgba(0, 136, 255, 0.45);
+
+    /* Semantic States */
+    --color-success: #10b981;
+    --color-danger: #ef4444;
+    --color-warning: #f59e0b;
+
+    /* Material 3 Radii */
+    --m3-shape-xs: 4px;
+    --m3-shape-sm: 8px;
+    --m3-shape-md: 12px;
+    --m3-shape-lg: 18px;
+    --m3-shape-xl: 28px;
+    --m3-shape-full: 9999px;
+
+    /* Material 3 Elevations */
+    --m3-elevation-1: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.24);
+    --m3-elevation-2: 0 3px 6px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.3);
+    --m3-elevation-3: 0 10px 20px rgba(0, 0, 0, 0.5), 0 3px 6px rgba(0, 0, 0, 0.35);
+    --m3-elevation-4: 0 15px 30px rgba(0, 0, 0, 0.6), 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   DYNAMIC THEME OVERRIDES (ANIMAL KAISER THEME PALETTES)
+   ========================================================================== */
+body.theme-all,
+body.theme-default {
+    --theme-accent: #38bdf8;
+    --theme-accent-container: rgba(56, 189, 248, 0.16);
+    --theme-on-accent: #02131e;
+    --theme-glow: rgba(56, 189, 248, 0.35);
+}
+body.theme-animal {
+    --theme-accent: var(--ak-animal-red-light);
+    --theme-accent-container: rgba(230, 25, 25, 0.16);
+    --theme-on-accent: #ffffff;
+    --theme-glow: var(--ak-animal-glow);
+}
+
+body.theme-strong {
+    --theme-accent: var(--ak-strong-green-light);
+    --theme-accent-container: rgba(0, 204, 68, 0.16);
+    --theme-on-accent: #021a0a;
+    --theme-glow: var(--ak-strong-glow);
+}
+
+body.theme-miracle {
+    --theme-accent: var(--ak-miracle-blue-light);
+    --theme-accent-container: rgba(0, 136, 255, 0.16);
+    --theme-on-accent: #ffffff;
+    --theme-glow: var(--ak-miracle-glow);
+}
+
+/* Base Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--md-sys-color-background);
+    background-image: 
+        radial-gradient(at 0% 0%, var(--theme-accent-container) 0px, transparent 45%),
+        radial-gradient(at 100% 100%, rgba(20, 24, 36, 0.8) 0px, transparent 60%);
+    background-attachment: fixed;
+    color: var(--md-sys-color-on-background);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+.font-mono {
+    font-family: var(--font-mono) !important;
+}
+
+.noto-emoji {
+    font-family: 'Noto Color Emoji', sans-serif;
+    vertical-align: middle;
+}
+
+/* ==========================================================================
+   MATERIAL 3 NAVIGATION BAR
+   ========================================================================== */
+.m3-app-bar {
+    background: rgba(15, 18, 26, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--md-sys-color-outline);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.m3-app-bar-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.m3-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface);
+}
+
+.m3-brand-logo {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.m3-brand:hover .m3-brand-logo {
+    transform: scale(1.08) rotate(-2deg);
+}
+
+.m3-brand-icon {
+    font-size: 1.7rem;
+}
+
+.m3-brand-title {
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+}
+
+.m3-brand-title strong {
+    font-weight: 800;
+    color: var(--theme-accent);
+}
+
+.m3-badge-version {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--m3-shape-full);
+    background: var(--theme-accent-container);
+    color: var(--theme-accent);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.m3-nav-pills {
+    display: flex;
+    align-items: center;
+    background: var(--md-sys-color-surface-container-low);
+    padding: 0.3rem;
+    border-radius: var(--m3-shape-full);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    gap: 0.25rem;
+}
+
+.m3-nav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.1rem;
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: var(--m3-shape-full);
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.m3-nav-pill:hover {
+    color: var(--md-sys-color-on-surface);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.m3-nav-pill.active {
+    color: var(--theme-on-accent);
+    background: var(--theme-accent);
+    box-shadow: 0 2px 10px var(--theme-glow);
+}
+
+.m3-nav-pill.pill-animal.active { background: var(--ak-animal-gradient); color: #fff; }
+.m3-nav-pill.pill-strong.active { background: var(--ak-strong-gradient); color: #021a0a; }
+.m3-nav-pill.pill-miracle.active { background: var(--ak-miracle-gradient); color: #fff; }
+
+/* Status Chip */
+.m3-status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--m3-shape-full);
+    background: var(--md-sys-color-surface-container-high);
+    border: 1px solid var(--md-sys-color-outline);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.m3-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-warning);
+    display: inline-block;
+    transition: background 0.3s;
+}
+
+.m3-status-dot.online {
+    background: var(--color-success);
+    box-shadow: 0 0 8px var(--color-success);
+}
+
+.m3-status-dot.offline {
+    background: var(--color-danger);
+    box-shadow: 0 0 6px var(--color-danger);
+}
+
+.m3-btn-icon {
+    background: transparent;
+    border: none;
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.m3-btn-icon:hover {
+    color: var(--theme-accent);
+    transform: rotate(90deg);
+}
+
+/* ==========================================================================
+   MAIN CONTAINER & TYPOGRAPHY
+   ========================================================================== */
+.m3-container {
+    flex: 1;
+    max-width: 1360px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2.25rem 1.5rem;
+}
+
+.m3-display-large {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    color: var(--md-sys-color-on-surface);
+}
+
+.m3-display-medium {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--md-sys-color-on-surface);
+}
+
+.m3-body-large {
+    font-size: 1.05rem;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-top: 0.4rem;
+}
+
+.m3-hero {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+/* ==========================================================================
+   MATERIAL 3 CARDS
+   ========================================================================== */
+.m3-card {
+    background: var(--md-sys-color-surface);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--m3-shape-xl);
+    padding: 1.75rem;
+}
+
+.m3-card-elevated {
+    background: var(--md-sys-color-surface-container);
+    box-shadow: var(--m3-elevation-2);
+}
+
+.m3-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.m3-card-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.m3-card-title-group h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+}
+
+.m3-card-subtitle {
+    font-size: 0.88rem;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-top: 0.15rem;
+}
+
+.card-icon {
+    font-size: 1.8rem;
+}
+
+/* ==========================================================================
+   MATERIAL 3 BUTTONS
+   ========================================================================== */
+.m3-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    border-radius: var(--m3-shape-full);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.m3-btn-primary {
+    background: var(--theme-accent);
+    color: var(--theme-on-accent);
+    box-shadow: 0 4px 12px var(--theme-glow);
+}
+
+.m3-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px var(--theme-glow);
+}
+
+.m3-btn-filled {
+    background: var(--theme-accent);
+    color: var(--theme-on-accent);
+}
+
+.type-animal .m3-btn-filled { background: var(--ak-animal-gradient); color: #fff; }
+.type-strong .m3-btn-filled { background: var(--ak-strong-gradient); color: #021a0a; }
+.type-miracle .m3-btn-filled { background: var(--ak-miracle-gradient); color: #fff; }
+
+.m3-btn-filled:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px var(--theme-glow);
+}
+
+.m3-btn-tonal {
+    background: var(--md-sys-color-surface-container-highest);
+    color: var(--md-sys-color-on-surface);
+}
+
+.m3-btn-tonal:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.m3-btn-outlined {
+    background: transparent;
+    border: 1px solid var(--md-sys-color-outline);
+    color: var(--md-sys-color-on-surface);
+}
+
+.m3-btn-outlined:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--theme-accent);
+}
+
+.m3-btn-danger {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.m3-btn-danger:hover {
+    background: #ef4444;
+    color: #fff;
+}
+
+.m3-btn-sm {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+}
+
+.m3-btn-block {
+    width: 100%;
+}
+
+.m3-btn-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* ==========================================================================
+   SCANNER SECTION & CAMERA VIEWPORT
+   ========================================================================== */
+.scanner-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1.75rem;
+}
+
+.camera-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #000;
+    border-radius: var(--m3-shape-lg);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--md-sys-color-outline);
+}
+
+#cameraVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.camera-idle-view {
+    position: absolute;
+    inset: 0;
+    background: rgba(16, 19, 29, 0.96);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    gap: 0.6rem;
+}
+
+.idle-icon {
+    font-size: 3.5rem;
+}
+
+.camera-idle-view h3 {
+    font-size: 1.2rem;
+    color: var(--md-sys-color-on-surface);
+}
+
+.camera-idle-view p {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.9rem;
+    max-width: 320px;
+}
+
+.m3-btn-open-camera {
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.4rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 5;
+}
+
+.scan-frame {
+    position: absolute;
+    inset: 24px;
+    border: 1px dashed rgba(255, 255, 255, 0.25);
+    border-radius: var(--m3-shape-md);
+    pointer-events: none;
+    display: none;
+}
+
+.scan-frame.active {
+    display: block;
+}
+
+.scan-laser-line {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--theme-accent), transparent);
+    box-shadow: 0 0 14px var(--theme-accent);
+    animation: scanAnim 2.4s infinite ease-in-out;
+}
+
+@keyframes scanAnim {
+    0% { top: 5%; }
+    50% { top: 95%; }
+    100% { top: 5%; }
+}
+
+.corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-color: var(--theme-accent);
+    border-style: solid;
+}
+
+.c-tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; border-top-left-radius: 6px; }
+.c-tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-top-right-radius: 6px; }
+.c-bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; border-bottom-left-radius: 6px; }
+.c-br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; border-bottom-right-radius: 6px; }
+
+/* Dropzone */
+.m3-dropzone {
+    margin-top: 1.25rem;
+    border: 2px dashed var(--md-sys-color-outline);
+    border-radius: var(--m3-shape-lg);
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    background: var(--md-sys-color-surface-container-low);
+    transition: all 0.2s ease;
+}
+
+.m3-dropzone:hover {
+    border-color: var(--theme-accent);
+    background: var(--theme-accent-container);
+}
+
+.drop-icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+/* ==========================================================================
+   FORM INPUTS & PANELS
+   ========================================================================== */
+.m3-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.m3-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.m3-field label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.m3-input, .m3-select, .m3-file-input {
+    width: 100%;
+    padding: 0.8rem 1.1rem;
+    background: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--m3-shape-md);
+    color: var(--md-sys-color-on-surface);
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.m3-input:focus, .m3-select:focus {
+    border-color: var(--theme-accent);
+    box-shadow: 0 0 0 3px var(--theme-accent-container);
+}
+
+.m3-input-action-row {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.m3-helper-text {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.m3-divider {
+    height: 1px;
+    background: var(--md-sys-color-outline-variant);
+    margin: 1.5rem 0;
+}
+
+.m3-info-panel .panel-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.m3-info-panel h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+}
+
+.m3-info-panel p {
+    font-size: 0.9rem;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: 0.75rem;
+}
+
+.m3-ip-badge-container {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+}
+
+.m3-ip-badge {
+    padding: 0.4rem 0.85rem;
+    background: var(--theme-accent-container);
+    color: var(--theme-accent);
+    border: 1px solid var(--theme-accent);
+    border-radius: var(--m3-shape-sm);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.m3-step-list {
+    padding-left: 1.25rem;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+/* ==========================================================================
+   COLLECTION HEADER & TOOLBAR
+   ========================================================================== */
+.m3-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1.5rem;
+}
+
+.m3-category-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--m3-shape-full);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    margin-bottom: 0.5rem;
+}
+
+.m3-category-chip.all { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%); color: #ffffff; box-shadow: 0 2px 12px rgba(14, 165, 233, 0.5); }
+.m3-category-chip.animal { background: var(--ak-animal-gradient); color: #fff; box-shadow: 0 2px 10px var(--ak-animal-glow); }
+.m3-category-chip.strong { background: var(--ak-strong-gradient); color: #021a0a; box-shadow: 0 2px 10px var(--ak-strong-glow); }
+.m3-category-chip.miracle { background: var(--ak-miracle-gradient); color: #fff; box-shadow: 0 2px 10px var(--ak-miracle-glow); }
+
+.m3-toolbar {
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 2.25rem;
+}
+
+.m3-segmented-tabs {
+    display: flex;
+    gap: 0.35rem;
+    background: var(--md-sys-color-surface-container-low);
+    padding: 0.3rem;
+    border-radius: var(--m3-shape-full);
+}
+
+.m3-tab-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: var(--m3-shape-full);
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.m3-tab-item:hover {
+    color: var(--md-sys-color-on-surface);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.m3-tab-item.tab-all.active {
+    background: #0284c7 !important;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 12px rgba(14, 165, 233, 0.5) !important;
+}
+
+.m3-tab-item.tab-animal.active { background: var(--ak-animal-gradient); color: #fff; }
+.m3-tab-item.tab-strong.active { background: var(--ak-strong-gradient); color: #021a0a; }
+.m3-tab-item.tab-miracle.active { background: var(--ak-miracle-gradient); color: #fff; }
+
+.m3-search-bar {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.m3-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.m3-search-box .search-icon {
+    position: absolute;
+    left: 0.85rem;
+    font-size: 0.95rem;
+}
+
+.m3-search-box input {
+    padding: 0.55rem 2rem 0.55rem 2.4rem;
+    background: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--m3-shape-full);
+    color: var(--md-sys-color-on-surface);
+    font-size: 0.9rem;
+    outline: none;
+    width: 250px;
+}
+
+.search-clear-btn {
+    position: absolute;
+    right: 0.75rem;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   VERTICAL RECTANGULAR TCG TRADING CARDS (PROPORTION ~ 1:1.4 / 2:3)
+   ========================================================================== */
+/* Card Grid: 12 Kartu per Halaman (Default 4 Kolom x 3 Baris, Responsif Menyesuaikan Lebar) */
+.m3-card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.35rem;
+    margin-bottom: 2.5rem;
+}
+
+@media (max-width: 1100px) {
+    .m3-card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.15rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .m3-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .m3-card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tcg-card {
+    background: var(--md-sys-color-surface-container);
+    border: 2px solid var(--md-sys-color-outline);
+    border-radius: var(--m3-shape-xl);
+    padding: 0.8rem;
+    box-shadow: var(--m3-elevation-2);
+    transition: transform 0.28s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.28s, border-color 0.28s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Glowing Border on Hover according to Theme */
+.type-animal .tcg-card:hover {
+    border-color: var(--ak-animal-red);
+    box-shadow: 0 12px 28px var(--ak-animal-glow);
+    transform: translateY(-6px);
+}
+
+.type-strong .tcg-card:hover {
+    border-color: var(--ak-strong-green);
+    box-shadow: 0 12px 28px var(--ak-strong-glow);
+    transform: translateY(-6px);
+}
+
+.type-miracle .tcg-card:hover {
+    border-color: var(--ak-miracle-blue);
+    box-shadow: 0 12px 28px var(--ak-miracle-glow);
+    transform: translateY(-6px);
+}
+
+.tcg-card-bezel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Card Vertical Slot Frame (Aspect Ratio 1 : 1.38 - Arcade Card Standard) */
+.tcg-card-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1.38;
+    background: #000;
+    border-radius: calc(var(--m3-shape-xl) - 6px);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tcg-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.tcg-card:hover .tcg-card-img {
+    transform: scale(1.04);
+}
+
+.tcg-placeholder-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    gap: 0.4rem;
+}
+
+.tcg-placeholder-img span {
+    font-size: 3rem;
+}
+
+.tcg-type-indicator {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tcg-type-indicator.animal { background: var(--ak-animal-gradient); }
+.tcg-type-indicator.strong { background: var(--ak-strong-gradient); }
+.tcg-type-indicator.miracle { background: var(--ak-miracle-gradient); }
+
+/* ==========================================================================
+   RARITY CHIPS: MATCHING COLOR & SPECIFIC ULTRA RARE GRADIENT
+   ========================================================================== */
+.m3-rarity-chip {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--m3-shape-full);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+/* 1. Normal: Color matches card type (Red for Animal, Green for Strong, Blue for Miracle) */
+.rarity-normal {
+    background: #334155;
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.m3-rarity-chip.rarity-normal.type-animal,
+.tcg-card.type-animal .m3-rarity-chip.rarity-normal,
+.m3-chip-dropdown-trigger.rarity-normal.type-animal,
+.m3-chip-dropdown-item.rarity-normal.type-animal {
+    background: var(--ak-animal-gradient) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 2px 10px var(--ak-animal-glow) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.m3-rarity-chip.rarity-normal.type-strong,
+.tcg-card.type-strong .m3-rarity-chip.rarity-normal,
+.m3-chip-dropdown-trigger.rarity-normal.type-strong,
+.m3-chip-dropdown-item.rarity-normal.type-strong {
+    background: var(--ak-strong-gradient) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 2px 10px var(--ak-strong-glow) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.m3-rarity-chip.rarity-normal.type-miracle,
+.tcg-card.type-miracle .m3-rarity-chip.rarity-normal,
+.m3-chip-dropdown-trigger.rarity-normal.type-miracle,
+.m3-chip-dropdown-item.rarity-normal.type-miracle {
+    background: var(--ak-miracle-gradient) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 2px 10px var(--ak-miracle-glow) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* 2. Bronze Rare */
+.rarity-bronze-rare {
+    background: linear-gradient(135deg, #cd7f32 0%, #a0522d 50%, #8b4513 100%);
+    color: #ffffff;
+    border: 1px solid #d97706;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* 3. Silver Rare */
+.rarity-silver-rare {
+    background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 50%, #94a3b8 100%);
+    color: #0f172a;
+    font-weight: 900;
+    border: 1px solid #f1f5f9;
+}
+
+/* 4. Gold Rare */
+.rarity-gold-rare {
+    background: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
+    color: #1e1b4b;
+    font-weight: 900;
+    border: 1px solid #facc15;
+    box-shadow: 0 0 12px rgba(234, 179, 8, 0.5);
+}
+
+/* 5. KHUSUS ULTRA RARE: Gradien Biru, Ungu, dan Merah */
+.rarity-ultra-rare {
+    background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 50%, #ef4444 100%) !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 14px rgba(139, 92, 246, 0.65), 0 0 4px rgba(239, 68, 68, 0.5);
+    animation: ultraShine 3s infinite alternate ease-in-out;
+}
+
+@keyframes ultraShine {
+    0% { filter: hue-rotate(0deg) brightness(1); }
+    100% { filter: hue-rotate(15deg) brightness(1.15); }
+}
+
+/* 6. KHUSUS KAISER RARE: Emas Gradasi Silver / Abu */
+.rarity-kaiser-rare {
+    background: linear-gradient(135deg, #d97706 0%, #facc15 25%, #ffffff 50%, #cbd5e1 75%, #64748b 100%) !important;
+    color: #0f172a !important;
+    font-weight: 900 !important;
+    border: 1px solid rgba(254, 240, 138, 0.9) !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 14px rgba(250, 204, 21, 0.65), 0 0 6px rgba(148, 163, 184, 0.7);
+    animation: kaiserGleam 3s infinite alternate ease-in-out;
+}
+
+@keyframes kaiserGleam {
+    0% {
+        box-shadow: 0 0 10px rgba(250, 204, 21, 0.5), 0 0 4px rgba(203, 213, 225, 0.5);
+        filter: brightness(1);
+    }
+    100% {
+        box-shadow: 0 0 16px rgba(250, 204, 21, 0.8), 0 0 8px rgba(226, 232, 240, 0.9);
+        filter: brightness(1.12);
+    }
+}
+
+/* Card Content Details */
+.tcg-card-content {
+    padding-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.tcg-card-name {
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: var(--md-sys-color-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.4rem;
+}
+
+.tcg-barcode-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--md-sys-color-surface-container-lowest);
+    border: 1px solid var(--md-sys-color-outline);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--m3-shape-sm);
+    font-size: 0.85rem;
+    color: var(--theme-accent);
+    margin-bottom: 1rem;
+    width: fit-content;
+}
+
+.tcg-actions {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tcg-sub-actions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.btn-delete-card {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.35rem !important;
+    font-weight: 700 !important;
+}
+
+.tcg-sub-actions .m3-btn {
+    flex: 1;
+    padding: 0.45rem 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+.m3-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2.5rem 0;
+}
+
+.m3-page-numbers {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.m3-page-btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--m3-shape-full);
+    background: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline);
+    color: var(--md-sys-color-on-surface-variant);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+}
+
+.m3-page-btn:hover {
+    color: var(--md-sys-color-on-surface);
+    border-color: var(--theme-accent);
+}
+
+.m3-page-btn.active {
+    background: var(--theme-accent);
+    color: var(--theme-on-accent);
+    border-color: transparent;
+    box-shadow: 0 2px 8px var(--theme-glow);
+}
+
+/* Empty State */
+.m3-empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.m3-empty-state .empty-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.m3-empty-state h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.m3-empty-state p {
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   MATERIAL 3 MODALS & DIALOGS
+   ========================================================================== */
+.m3-modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.m3-modal-backdrop.active {
+    display: flex;
+}
+
+.m3-dialog {
+    width: 100%;
+    max-width: 500px;
+    background: var(--md-sys-color-surface-container-high);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--m3-shape-xl);
+    padding: 2rem;
+    box-shadow: var(--m3-elevation-4);
+}
+
+.m3-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.m3-dialog-header h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--md-sys-color-on-surface);
+}
+
+.m3-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* ==========================================================================
+   MATERIAL 3 CHIP SELECT DROPDOWN (Card Type Dropdown with Colored Chips)
+   ========================================================================== */
+.m3-chip-select-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.m3-chip-dropdown-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.15rem;
+    border-radius: var(--m3-shape-md);
+    border: 1.5px solid rgba(255, 255, 255, 0.16);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    user-select: none;
+}
+
+.m3-chip-dropdown-trigger:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
+
+.m3-chip-dropdown-trigger:focus-visible {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+
+.chip-trigger-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.chip-trigger-content .chip-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.chip-dropdown-arrow {
+    font-size: 0.75rem;
+    opacity: 0.85;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.m3-chip-select-dropdown.open .chip-dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Card Type Specific Trigger Styles */
+.m3-chip-dropdown-trigger.chip-animal {
+    background: var(--ak-animal-gradient);
+    color: #ffffff;
+    border-color: rgba(255, 120, 120, 0.35);
+    box-shadow: 0 4px 14px var(--ak-animal-glow);
+}
+
+.m3-chip-dropdown-trigger.chip-strong {
+    background: var(--ak-strong-gradient);
+    color: #021a0a;
+    border-color: rgba(120, 255, 170, 0.35);
+    box-shadow: 0 4px 14px var(--ak-strong-glow);
+}
+
+.m3-chip-dropdown-trigger.chip-miracle {
+    background: var(--ak-miracle-gradient);
+    color: #ffffff;
+    border-color: rgba(120, 190, 255, 0.35);
+    box-shadow: 0 4px 14px var(--ak-miracle-glow);
+}
+
+/* Dropdown Menu Container */
+.m3-chip-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: rgba(18, 24, 38, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--m3-shape-md);
+    padding: 0.6rem;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    flex-direction: column;
+    gap: 0.5rem;
+    animation: chipMenuFadeIn 0.2s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.m3-chip-select-dropdown.open .m3-chip-dropdown-menu {
+    display: flex;
+}
+
+@keyframes chipMenuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Individual Colored Chip Options */
+.m3-chip-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.7rem 1.15rem;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    text-align: left;
+}
+
+.m3-chip-dropdown-item .noto-emoji {
+    font-size: 1.15rem;
+    margin-right: 0.6rem;
+}
+
+.m3-chip-dropdown-item .item-name {
+    flex: 1;
+}
+
+.m3-chip-dropdown-item .item-badge {
+    display: none;
+    font-weight: 900;
+    font-size: 1.05rem;
+    margin-left: 0.5rem;
+}
+
+.m3-chip-dropdown-item.selected .item-badge {
+    display: inline-block;
+}
+
+/* 1. Animal Chip Option */
+.m3-chip-dropdown-item.chip-animal {
+    background: var(--ak-animal-gradient);
+    color: #ffffff;
+}
+
+.m3-chip-dropdown-item.chip-animal:hover {
+    box-shadow: 0 4px 16px var(--ak-animal-glow);
+    transform: scale(1.015);
+}
+
+.m3-chip-dropdown-item.chip-animal.selected {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4), 0 4px 16px var(--ak-animal-glow);
+}
+
+/* 2. Strong Chip Option */
+.m3-chip-dropdown-item.chip-strong {
+    background: var(--ak-strong-gradient);
+    color: #021a0a;
+}
+
+.m3-chip-dropdown-item.chip-strong:hover {
+    box-shadow: 0 4px 16px var(--ak-strong-glow);
+    transform: scale(1.015);
+}
+
+.m3-chip-dropdown-item.chip-strong.selected {
+    border-color: #021a0a;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4), 0 4px 16px var(--ak-strong-glow);
+}
+
+/* 3. Miracle Chip Option */
+.m3-chip-dropdown-item.chip-miracle {
+    background: var(--ak-miracle-gradient);
+    color: #ffffff;
+}
+
+.m3-chip-dropdown-item.chip-miracle:hover {
+    box-shadow: 0 4px 16px var(--ak-miracle-glow);
+    transform: scale(1.015);
+}
+
+.m3-chip-dropdown-item.chip-miracle.selected {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4), 0 4px 16px var(--ak-miracle-glow);
+}
+
+/* ==========================================================================
+   RARITY CHIP DROPDOWN STYLES (Matching Card List Rarity Badges)
+   ========================================================================== */
+
+/* 1. Rarity Trigger Styles */
+.m3-chip-dropdown-trigger.rarity-normal {
+    background: #334155;
+    color: #f8fafc;
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.m3-chip-dropdown-trigger.rarity-bronze-rare {
+    background: linear-gradient(135deg, #cd7f32 0%, #a0522d 50%, #8b4513 100%);
+    color: #ffffff;
+    border-color: #d97706;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 14px rgba(180, 83, 9, 0.45);
+}
+
+.m3-chip-dropdown-trigger.rarity-silver-rare {
+    background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 50%, #94a3b8 100%);
+    color: #0f172a;
+    font-weight: 900;
+    border-color: #f1f5f9;
+    box-shadow: 0 4px 14px rgba(203, 213, 225, 0.35);
+}
+
+.m3-chip-dropdown-trigger.rarity-gold-rare {
+    background: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
+    color: #1e1b4b;
+    font-weight: 900;
+    border-color: #facc15;
+    box-shadow: 0 4px 16px rgba(234, 179, 8, 0.5);
+}
+
+.m3-chip-dropdown-trigger.rarity-ultra-rare {
+    background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 50%, #ef4444 100%) !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    border-color: rgba(255, 255, 255, 0.6) !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.65), 0 0 6px rgba(239, 68, 68, 0.5) !important;
+    animation: ultraShine 3s infinite alternate ease-in-out;
+}
+
+.m3-chip-dropdown-trigger.rarity-kaiser-rare {
+    background: linear-gradient(135deg, #d97706 0%, #facc15 25%, #ffffff 50%, #cbd5e1 75%, #64748b 100%) !important;
+    color: #0f172a !important;
+    font-weight: 900 !important;
+    border-color: rgba(254, 240, 138, 0.95) !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 18px rgba(250, 204, 21, 0.65), 0 0 8px rgba(148, 163, 184, 0.7) !important;
+    animation: kaiserGleam 3s infinite alternate ease-in-out;
+}
+
+/* 2. Rarity Dropdown Items */
+.m3-chip-dropdown-item.rarity-normal {
+    background: #334155;
+    color: #f8fafc;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.m3-chip-dropdown-item.rarity-bronze-rare {
+    background: linear-gradient(135deg, #cd7f32 0%, #a0522d 50%, #8b4513 100%);
+    color: #ffffff;
+    border-color: #d97706;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.m3-chip-dropdown-item.rarity-silver-rare {
+    background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 50%, #94a3b8 100%);
+    color: #0f172a;
+    font-weight: 900;
+    border-color: #f1f5f9;
+}
+
+.m3-chip-dropdown-item.rarity-gold-rare {
+    background: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
+    color: #1e1b4b;
+    font-weight: 900;
+    border-color: #facc15;
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.4);
+}
+
+.m3-chip-dropdown-item.rarity-ultra-rare {
+    background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 50%, #ef4444 100%) !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.5);
+    animation: ultraShine 3s infinite alternate ease-in-out;
+}
+
+.m3-chip-dropdown-item.rarity-kaiser-rare {
+    background: linear-gradient(135deg, #d97706 0%, #facc15 25%, #ffffff 50%, #cbd5e1 75%, #64748b 100%) !important;
+    color: #0f172a !important;
+    font-weight: 900 !important;
+    border-color: rgba(254, 240, 138, 0.9) !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 14px rgba(250, 204, 21, 0.5);
+    animation: kaiserGleam 3s infinite alternate ease-in-out;
+}
+
+.m3-chip-dropdown-item.rarity-normal:hover,
+.m3-chip-dropdown-item.rarity-bronze-rare:hover,
+.m3-chip-dropdown-item.rarity-silver-rare:hover,
+.m3-chip-dropdown-item.rarity-gold-rare:hover,
+.m3-chip-dropdown-item.rarity-ultra-rare:hover,
+.m3-chip-dropdown-item.rarity-kaiser-rare:hover {
+    transform: scale(1.015);
+    filter: brightness(1.1);
+}
+
+.m3-chip-dropdown-item.rarity-normal.selected,
+.m3-chip-dropdown-item.rarity-bronze-rare.selected,
+.m3-chip-dropdown-item.rarity-silver-rare.selected,
+.m3-chip-dropdown-item.rarity-gold-rare.selected,
+.m3-chip-dropdown-item.rarity-ultra-rare.selected,
+.m3-chip-dropdown-item.rarity-kaiser-rare.selected {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8), 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+.m3-chip-dropdown-menu {
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+
+/* ==========================================================================
+   MATERIAL 3 SNACKBAR / TOAST NOTIFICATION
+   ========================================================================== */
+#toast,
+.m3-snackbar,
+.toast {
+    position: fixed !important;
+    bottom: 28px !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(24px) scale(0.96) !important;
+    max-width: min(560px, 92vw) !important;
+    min-width: 280px;
+    padding: 0.8rem 1.35rem !important;
+    background: rgba(20, 25, 36, 0.96) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: var(--m3-shape-full) !important;
+    color: #f8fafc !important;
+    font-family: 'Public Sans', sans-serif !important;
+    font-size: 0.92rem !important;
+    font-weight: 600 !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.3) !important;
+    opacity: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    transition: opacity 0.25s cubic-bezier(0.2, 0, 0, 1), transform 0.25s cubic-bezier(0.2, 0, 0, 1) !important;
+    z-index: 999999 !important;
+    pointer-events: none !important;
+}
+
+#toast.show,
+.m3-snackbar.show,
+.toast.show {
+    opacity: 1 !important;
+    transform: translateX(-50%) translateY(0) scale(1) !important;
+    pointer-events: auto !important;
+}
+
+/* Toast Elements */
+.m3-toast-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.m3-toast-text {
+    flex: 1;
+    word-break: break-word;
+    line-height: 1.35;
+    letter-spacing: 0.2px;
+}
+
+.m3-toast-close {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.55);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0.2rem 0.45rem;
+    border-radius: var(--m3-shape-full);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+
+.m3-toast-close:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* 1. Success Toast */
+#toast.success,
+.m3-snackbar.success,
+.toast.success {
+    border-color: #10b981 !important;
+    background: rgba(8, 36, 26, 0.96) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 16px rgba(16, 185, 129, 0.4) !important;
+}
+
+/* 2. Warning / Offline Toast */
+#toast.warning,
+.m3-snackbar.warning,
+.toast.warning {
+    border-color: #f59e0b !important;
+    background: rgba(48, 28, 8, 0.96) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 18px rgba(245, 158, 11, 0.45) !important;
+}
+
+/* 3. Error Toast */
+#toast.error,
+.m3-snackbar.error,
+.toast.error {
+    border-color: #ef4444 !important;
+    background: rgba(50, 14, 18, 0.96) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 18px rgba(239, 68, 68, 0.5) !important;
+}
+
+/* 4. Info Toast */
+#toast.info,
+.m3-snackbar.info,
+.toast.info {
+    border-color: #3b82f6 !important;
+    background: rgba(14, 26, 48, 0.96) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 16px rgba(59, 130, 246, 0.35) !important;
+}
+
+/* Action row for inputs with buttons */
+.m3-input-action-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.m3-input-action-row input {
+    flex: 1;
+    min-width: 0;
+}
+
+.btn-scan-img {
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    padding: 0.65rem 0.95rem;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.m3-footer {
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    background: rgba(15, 18, 26, 0.75);
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.m3-credit {
+    margin-top: 0.35rem;
+    color: #64748b;
+    font-size: 0.82rem;
+}
+
+.m3-credit a {
+    color: var(--theme-accent);
+    text-decoration: none;
+}
+
+.m3-credit a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 900px) {
+    .scanner-layout {
+        grid-template-columns: 1fr;
+    }
+    .m3-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .m3-search-box input {
+        width: 100%;
+    }
+    .m3-app-bar-container {
+        flex-wrap: wrap;
+    }
+    .m3-card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+/* ==========================================================================
+   REAL VISUAL 1D BARCODE STRIP (ARCADE STYLE)
+   ========================================================================== */
+.tcg-barcode-strip {
+    background: rgba(11, 13, 20, 0.7);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--m3-shape-md);
+    padding: 0.45rem 0.55rem 0.35rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    width: 100%;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.tcg-card:hover .tcg-barcode-strip {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.barcode-visual-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.15rem 0;
+    overflow: hidden;
+}
+
+.barcode-svg {
+    max-width: 100%;
+    height: 36px;
+    display: block;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.barcode-text-row {
+    width: 100%;
+    text-align: center;
+    padding-top: 0.15rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.barcode-code-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--md-sys-color-on-surface-variant);
+    background: transparent;
+    border: none;
+    padding: 0;
+}
